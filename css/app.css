@@ -3,6 +3,10 @@
 	padding: 0;
 }
 
+body {
+	background: #000 url('../img/darkness.png');
+}
+
 .container {
 	display: flex;
 	align-items: center;
