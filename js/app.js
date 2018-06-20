@@ -43,3 +43,9 @@ function shuffle(a) {
 createDeck();
 shuffle(icons);
 addIcons();
+
+const card = document.querySelector('td');
+
+document.addEventListener('click', function(e) {
+	
+});
