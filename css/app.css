@@ -44,3 +44,18 @@ td {
 	text-align: center;
 	border-radius: 10px;
 }
+
+@media only screen and (min-width: 600px) {
+    .deck {
+    	width: 100%;
+    	/*border-collapse: collapse;*/
+    }
+
+    .card {
+    	height: 170px;
+    }
+
+    .table-container {
+    	width: 60%;
+    }
+}
