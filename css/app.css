@@ -15,3 +15,23 @@ body {
 	width: 100%;
 	height: 100vh;
 }
+
+.deck {
+	width: 100%;
+	padding: 1em;
+	border-collapse: separate;
+	border-spacing: 20px 10px;
+}
+
+.table-container {
+	width: 95%;
+	border: 1px solid white;
+}
+
+td {
+	width: 100px;
+	height: 100px;
+	background: white;
+	text-align: center;
+	border-radius: 10px;
+}
