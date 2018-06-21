@@ -7,6 +7,18 @@ body {
 	background: #000 url('../img/darkness.png');
 }
 
+.card i  {
+    visibility: hidden;
+}
+
+.show  {
+    background: blue;
+}
+
+.open i {
+    visibility: visible;
+}
+
 .container {
 	display: flex;
 	align-items: center;

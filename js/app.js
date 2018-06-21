@@ -44,8 +44,13 @@ createDeck();
 shuffle(icons);
 addIcons();
 
-const card = document.querySelector('td');
+const cards = document.querySelectorAll('.card');
 
-document.addEventListener('click', function(e) {
-	
+for (let card of cards){
+    card.addEventListener('click', function(e){
+    card.classList.toggle('show');
+    card.classList.toggle('open');
 });
+}
+	
+
