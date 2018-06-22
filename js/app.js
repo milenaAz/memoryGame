@@ -89,13 +89,18 @@ function unmatched() {
 }
 
 function gameOver() {
+	const modal = document.querySelector('.modal');
+	const close = document.querySelector('.close');
 	if(matchedPairs === 8){
-		console.log("Congratulations");
+		modal.style.display = 'block';
+		close.addEventListener('click', function() {
+			modal.style.display = 'none';
+		});
 	}
 }
 
 createDeck();
-shuffle(icons);
+// shuffle(icons);
 addIcons();
 
 const cards = document.querySelectorAll('.card');
