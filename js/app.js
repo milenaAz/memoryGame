@@ -74,6 +74,8 @@ function matched() {
 	matchedPairs++;
 }
 
+/* this function runs when compared cards not match.
+If cards not match then cards should close */
 function unmatched() {
 	openedCards[0].classList.toggle('unmatched');
 	openedCards[1].classList.toggle('unmatched');
@@ -86,6 +88,12 @@ function unmatched() {
 		}, 500);
 }
 
+function gameOver() {
+	if(matchedPairs === 8){
+		console.log("Congratulations");
+	}
+}
+
 createDeck();
 shuffle(icons);
 addIcons();
@@ -95,6 +103,7 @@ const cards = document.querySelectorAll('.card');
 for (let card of cards){
     card.addEventListener('click', openCard );
     card.addEventListener('click', compareCards );
+    card.addEventListener('click', gameOver );
 }
 	
 
