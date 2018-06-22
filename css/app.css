@@ -7,23 +7,26 @@ body {
 	background: #000 url('../img/darkness.png');
 }
 
+/*
+ * Styles for cards
+ */  
+.card.disable {
+	pointer-events: none; /* prevents all clicks */
+}
+
 .card i  {
     visibility: hidden;
 }
 
-.show  {
-    background: blue;
-}
-
-.open i {
+.card.open i {
     visibility: visible;
 }
 
-.disable {
-	pointer-events: none; /* prevents all clicks */
+.card.show  {
+    background: blue;
 }
 
-.unmatched {
+.card.unmatched {
 	background: red;
 }
 
