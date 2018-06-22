@@ -4,7 +4,7 @@ const icons = ["fa-anchor", "fa-anchor", "fa-automobile", "fa-automobile", "fa-h
 				 "fa-bicycle", "fa-bicycle", "fa-camera", "fa-camera", "fa-cloud",
 				  "fa-cloud", "fa-coffee", "fa-coffee", "fa-cube", "fa-cube"];
 
-const openedCards = [];
+let openedCards = [];
 
 /* Creates a 8x8 grid*/
 function createDeck () {
@@ -43,11 +43,23 @@ function shuffle(a) {
 }
 
 function openCard() {
-	console.log(this);
 	this.classList.toggle('show');
     this.classList.toggle('open');
+}
 
-    openedCards.push(this);
+function compareCards() {
+	openedCards.push(this);
+   
+    if(openedCards.length === 2) {
+
+        if(openedCards[0].innerHTML === openedCards[1].innerHTML){
+           console.log("Match");
+           openedCards = [];
+        } else {
+            console.log("Unmatched");
+            openedCards = [];
+        }
+    }
 }
 
 createDeck();
@@ -58,6 +70,7 @@ const cards = document.querySelectorAll('.card');
 
 for (let card of cards){
     card.addEventListener('click', openCard );
+    card.addEventListener('click', compareCards );
 }
 	
 
