@@ -5,8 +5,9 @@ const icons = ["fa-anchor", "fa-anchor", "fa-automobile", "fa-automobile", "fa-h
 				  "fa-cloud", "fa-coffee", "fa-coffee", "fa-cube", "fa-cube"];
 
 let openedCards = [];
+let matchedPairs = 0;
 
-/* Creates a 8x8 grid*/
+/* Creates a 8x8 grid */
 function createDeck () {
 	const docFrag = document.createDocumentFragment();
 	const deck = document.querySelector('tbody');
@@ -24,7 +25,7 @@ function createDeck () {
 	deck.appendChild(docFrag);
 }
 
-/*Adds icon classes to <td> elements*/
+/* Adds icon classes to <td> elements */
 function addIcons() {
 	const deck = document.querySelectorAll('td');
 
@@ -33,7 +34,7 @@ function addIcons() {
 	}
 }
 
-/*Shuffles the array */
+/* Shuffles the array */
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -42,24 +43,47 @@ function shuffle(a) {
     return a;
 }
 
+/* Show the card */
 function openCard() {
 	this.classList.toggle('show');
     this.classList.toggle('open');
+    this.classList.toggle('disable');
 }
 
+/* Compares the cards if cards match then call match()
+ else calls unmatched() function */
 function compareCards() {
 	openedCards.push(this);
    
     if(openedCards.length === 2) {
 
-        if(openedCards[0].innerHTML === openedCards[1].innerHTML){
-           console.log("Match");
-           openedCards = [];
+        if(openedCards[0].innerHTML === openedCards[1].innerHTML){      
+           matched();
         } else {
-            console.log("Unmatched");
-            openedCards = [];
+            unmatched();
         }
     }
+}
+
+/* this function runs when compared cards match.
+If cards match then cards should stay opened */
+function matched() {
+	// openedCards[0].classList.toggle('disable');
+	// openedCards[1].classList.toggle('disable');
+	openedCards = [];
+	matchedPairs++;
+}
+
+function unmatched() {
+	openedCards[0].classList.toggle('unmatched');
+	openedCards[1].classList.toggle('unmatched');
+
+	setTimeout( function(){
+		
+		openedCards[0].classList.remove('show', 'open', 'unmatched', 'disable');
+		openedCards[1].classList.remove('show', 'open', 'unmatched', 'disable');
+		openedCards = [];
+		}, 500);
 }
 
 createDeck();
