@@ -58,6 +58,7 @@ body {
 .game-panel .stars li {
 	list-style: none;
 	float: left;
+	margin-left: 10px;
 }
 
 h1 {
