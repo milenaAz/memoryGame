@@ -75,6 +75,25 @@ function moveCounter() {
 	const movesEl = document.querySelector('.moves');
 	moves++;
 	movesEl.innerHTML = moves + " ";
+	if(moves > 2 && moves <= 5 ){
+		rating(2);	
+	}
+	else if (moves > 6 ) {
+		rating(1);
+	}
+	
+}
+
+/*
+*	
+*/
+function rating(index) {
+	const stars = document.querySelectorAll('.fa-star');
+	const starToRemove = stars.item(index);
+	if(starToRemove !== null){
+		starToRemove.className ='fa fa-star-o';
+	}
+	
 }
 
 /* this function runs when compared cards match.
