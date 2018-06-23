@@ -60,10 +60,10 @@ function compareCards() {
 
         if(openedCards[0].innerHTML === openedCards[1].innerHTML){      
            matched();
-           steps();
+           moveCounter();
         } else {
-            unmatched();
-            steps();
+           unmatched();
+           moveCounter();
         }
     }
 }
@@ -71,7 +71,7 @@ function compareCards() {
 /*
 *  Counts the moves
 */
-function steps() {
+function moveCounter() {
 	const movesEl = document.querySelector('.moves');
 	moves++;
 	movesEl.innerHTML = moves + " ";
