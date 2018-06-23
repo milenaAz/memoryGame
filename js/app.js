@@ -4,6 +4,9 @@ const icons = ["fa-anchor", "fa-anchor", "fa-automobile", "fa-automobile", "fa-h
 				 "fa-bicycle", "fa-bicycle", "fa-camera", "fa-camera", "fa-cloud",
 				  "fa-cloud", "fa-coffee", "fa-coffee", "fa-cube", "fa-cube"];
 
+const stars = document.querySelectorAll('.fa-star');
+const deck = document.querySelector('tbody');
+
 let openedCards = [];
 let matchedPairs = 0;
 let moves = 0;
@@ -68,6 +71,29 @@ function compareCards() {
     }
 }
 
+/* this function runs when compared cards match.
+If cards match then cards should stay opened */
+function matched() {
+	// openedCards[0].classList.toggle('disable');
+	// openedCards[1].classList.toggle('disable');
+	openedCards = [];
+	matchedPairs++;
+}
+
+/* this function runs when compared cards not match.
+If cards not match then cards should close */
+function unmatched() {
+	openedCards[0].classList.toggle('unmatched');
+	openedCards[1].classList.toggle('unmatched');
+
+	setTimeout( function(){
+		
+		openedCards[0].classList.remove('show', 'open', 'unmatched', 'disable');
+		openedCards[1].classList.remove('show', 'open', 'unmatched', 'disable');
+		openedCards = [];
+		}, 500);
+}
+
 /*
 *  Counts the moves
 */
@@ -96,27 +122,10 @@ function rating(index) {
 	}
 }
 
-/* this function runs when compared cards match.
-If cards match then cards should stay opened */
-function matched() {
-	// openedCards[0].classList.toggle('disable');
-	// openedCards[1].classList.toggle('disable');
-	openedCards = [];
-	matchedPairs++;
-}
-
-/* this function runs when compared cards not match.
-If cards not match then cards should close */
-function unmatched() {
-	openedCards[0].classList.toggle('unmatched');
-	openedCards[1].classList.toggle('unmatched');
-
-	setTimeout( function(){
-		
-		openedCards[0].classList.remove('show', 'open', 'unmatched', 'disable');
-		openedCards[1].classList.remove('show', 'open', 'unmatched', 'disable');
-		openedCards = [];
-		}, 500);
+function gameOver() {
+	if(matchedPairs === 8) {
+		modalPopup();
+	}
 }
 
 /*
@@ -132,22 +141,50 @@ function modalPopup(){
 	});
 }
 
-function gameOver() {
-	if(matchedPairs === 8) {
-		modalPopup();
+// function restartGame() {
+	const restartBtn = document.querySelectorAll('.start-game');
+	for( const btn of restartBtn) {
+	btn.addEventListener('click', function() {
+		startGame();
+	})
+}
+// }
+
+function clickCard () {
+	const cards = document.querySelectorAll('.card');
+
+	for (let card of cards){
+	    card.addEventListener('click', openCard );
+	    card.addEventListener('click', compareCards );
+	    card.addEventListener('click', gameOver );
 	}
 }
 
-createDeck();
-// shuffle(icons);
-addIcons();
-
-const cards = document.querySelectorAll('.card');
-
-for (let card of cards){
-    card.addEventListener('click', openCard );
-    card.addEventListener('click', compareCards );
-    card.addEventListener('click', gameOver );
+function resetGame () {
+	//remove the deck
+	while (deck.firstChild) {
+    	deck.removeChild(deck.firstChild);
+	}
+	//get all the stars back
+	for (let i=0; i<3; i++)
+	{
+		stars[i].className = 'fa fa-star';
+	}
+	//reset moves to 0
+	const movesEl = document.querySelector('.moves');
+	movesEl.innerHTML = 0 + ' ';
 }
+
+function startGame() {
+	resetGame();
+	createDeck();
+	// shuffle(icons);
+	addIcons();
+	clickCard();
+}
+
+startGame();
+
+
 	
 
