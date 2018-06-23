@@ -46,8 +46,23 @@ body {
 	border-spacing: 20px 10px;
 }
 
+.game-panel {
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+    width: 80%;
+    font-size: 23px;
+}
+
+.game-panel .stars li {
+	list-style: none;
+	float: left;
+}
+
 h1 {
 	color: white;
+	margin-bottom: 20px;
 	font-size: 2em;
 }
 
@@ -108,6 +123,10 @@ td {
     .card {
     	height: 170px;
     }
+
+    .game-panel {
+	    width: 30%;
+	}
 
     .table-container {
     	width: 60%;

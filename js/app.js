@@ -6,6 +6,7 @@ const icons = ["fa-anchor", "fa-anchor", "fa-automobile", "fa-automobile", "fa-h
 
 let openedCards = [];
 let matchedPairs = 0;
+let moves = 0;
 
 /* Creates a 8x8 grid */
 function createDeck () {
@@ -59,10 +60,21 @@ function compareCards() {
 
         if(openedCards[0].innerHTML === openedCards[1].innerHTML){      
            matched();
+           steps();
         } else {
             unmatched();
+            steps();
         }
     }
+}
+
+/*
+*  Counts the moves
+*/
+function steps() {
+	const movesEl = document.querySelector('.moves');
+	moves++;
+	movesEl.innerHTML = moves + " ";
 }
 
 /* this function runs when compared cards match.
