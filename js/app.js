@@ -118,7 +118,7 @@ function rating(index) {
 	const starToRemove = stars.item(index);
 	
 	if(starToRemove !== null){
-		starToRemove.className ='fa fa-star-o';
+		starToRemove.className ='fa fa-star-o'; 
 	}
 }
 
@@ -134,10 +134,16 @@ function gameOver() {
 function modalPopup(){
 	const modal = document.querySelector('.modal');
 	const close = document.querySelector('.close');
-	
+	const finalMoves = document.querySelector('.display-moves');
+	const finalStars = document.querySelector('.display-stars');
+	const stars = document.querySelectorAll('.fa-star');
+
 	modal.style.display = 'block';
+	finalMoves.innerHTML = moves;
+	finalStars.innerHTML = stars.length;
 	close.addEventListener('click', function() {
 		modal.style.display = 'none';
+		startGame();
 	});
 }
 
@@ -165,14 +171,18 @@ function resetGame () {
 	while (deck.firstChild) {
     	deck.removeChild(deck.firstChild);
 	}
+	//reset moves to 0
+	moves = 0; 
+	const movesEl = document.querySelector('.moves');
+	movesEl.innerHTML = 0 + ' ';
+
+	//reset matchedPairs to 0
+	matchedPairs = 0;
 	//get all the stars back
 	for (let i=0; i<3; i++)
 	{
 		stars[i].className = 'fa fa-star';
 	}
-	//reset moves to 0
-	const movesEl = document.querySelector('.moves');
-	movesEl.innerHTML = 0 + ' ';
 }
 
 function startGame() {
