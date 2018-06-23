@@ -79,10 +79,10 @@ i[class^="fa"] {
     width: 80%;
 }
 
-.modal-content.close {
+.close {
     color: #aaaaaa;
     float: right;
-    font-size: 50px;
+    font-size: 24px;
     font-weight: bold;
 }
 

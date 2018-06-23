@@ -88,14 +88,22 @@ function unmatched() {
 		}, 500);
 }
 
-function gameOver() {
+/*
+*  Opens the modal 
+*/
+function modalPopup(){
 	const modal = document.querySelector('.modal');
 	const close = document.querySelector('.close');
-	if(matchedPairs === 8){
-		modal.style.display = 'block';
-		close.addEventListener('click', function() {
-			modal.style.display = 'none';
-		});
+	
+	modal.style.display = 'block';
+	close.addEventListener('click', function() {
+		modal.style.display = 'none';
+	});
+}
+
+function gameOver() {
+	if(matchedPairs === 8) {
+		modalPopup();
 	}
 }
 
