@@ -239,7 +239,8 @@ function resetGame () {
 	moves = 0; 
 	const movesEl = document.querySelector('.moves');
 	movesEl.innerHTML = 0 + ' ';
-
+	//reset openCards
+	openedCards = [];
 	//reset matchedPairs to 0
 	matchedPairs = 0;
 	//get all the stars back
