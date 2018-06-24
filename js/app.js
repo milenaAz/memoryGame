@@ -10,6 +10,7 @@ const deck = document.querySelector('tbody');
 let openedCards = [];
 let matchedPairs = 0;
 let moves = 0;
+let cardClicked = true;
 
 /* Creates a 8x8 grid */
 function createDeck () {
@@ -49,6 +50,12 @@ function shuffle(a) {
 
 /* Show the card */
 function openCard() {
+	//starts the timer on first click
+	if(cardClicked){
+		startTimer();
+		cardClicked = false;
+	}
+
 	this.classList.toggle('show');
     this.classList.toggle('open');
     this.classList.toggle('disable');
@@ -128,6 +135,28 @@ function gameOver() {
 	}
 }
 
+
+let sec = 0;
+let min = 0;
+let hours = 0;
+let timer = document.querySelector('.timer');
+let stopWatch;
+
+function startTimer() {
+	stopWatch = setInterval(function() {
+		timer.innerHTML = `${hours}:${min}:${sec}`;
+		sec++;
+		if(sec === 60){
+			min++;
+			sec = 0;
+		}
+		if(min === 60){
+			hours++;
+			min = 0;
+		}
+	},1000);	
+}
+
 /*
 *  Opens the modal 
 */
@@ -183,6 +212,13 @@ function resetGame () {
 	{
 		stars[i].className = 'fa fa-star';
 	}
+	//reset the timer
+	cardClicked = true;
+	sec = 0;
+	min = 0;
+	hours = 0;
+	timer.innerHTML = `${hours}:${min}:${sec}`;
+	clearInterval(stopWatch);
 }
 
 function startGame() {
