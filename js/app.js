@@ -195,19 +195,28 @@ function stopTimer() {
 function modalPopup(){
 	const modal = document.querySelector('.modal');
 	const close = document.querySelector('.close');
+	
+	displayResults();
+	modal.style.display = 'block';
+	
+	close.addEventListener('click', function() {
+		modal.style.display = 'none';
+		startGame();
+	});
+}
+
+/*
+* Displays the results
+*/
+function displayResults() {
 	const finalMoves = document.querySelector('.display-moves');
 	const finalStars = document.querySelector('.display-stars');
 	const finalTimer = document.querySelector('.display-timer');
 	const stars = document.querySelectorAll('.fa-star');
 
-	modal.style.display = 'block';
 	finalMoves.innerHTML = moves;
 	finalStars.innerHTML = stars.length;
 	finalTimer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec-1)}`;
-	close.addEventListener('click', function() {
-		modal.style.display = 'none';
-		startGame();
-	});
 }
 
 // function restartGame() {
@@ -239,7 +248,7 @@ function resetGame () {
 	moves = 0; 
 	const movesEl = document.querySelector('.moves');
 	movesEl.innerHTML = 0 + ' ';
-	//reset openCards
+	//reset openedCards
 	openedCards = [];
 	//reset matchedPairs to 0
 	matchedPairs = 0;
