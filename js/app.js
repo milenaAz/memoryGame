@@ -155,6 +155,7 @@ function startTimer() {
 			hours++;
 			min = 0;
 		}
+		console.log(sec);
 	},1000);
 }
 
@@ -196,6 +197,7 @@ function modalPopup(){
 	const restartBtn = document.querySelectorAll('.start-game');
 	for( const btn of restartBtn) {
 	btn.addEventListener('click', function() {
+		stopTimer();
 		startGame();
 	})
 }
