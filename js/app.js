@@ -67,7 +67,6 @@ function compareCards() {
 	openedCards.push(this);
    
     if(openedCards.length === 2) {
-
         if(openedCards[0].innerHTML === openedCards[1].innerHTML){      
            matched();
            moveCounter();
@@ -75,14 +74,16 @@ function compareCards() {
            unmatched();
            moveCounter();
         }
+
     }
 }
 
 /* this function runs when compared cards match.
 If cards match then cards should stay opened */
 function matched() {
-	// openedCards[0].classList.toggle('disable');
-	// openedCards[1].classList.toggle('disable');
+	openedCards[0].classList.add('matched');
+	openedCards[1].classList.add('matched');
+
 	openedCards = [];
 	matchedPairs++;
 }
@@ -92,13 +93,30 @@ If cards not match then cards should close */
 function unmatched() {
 	openedCards[0].classList.toggle('unmatched');
 	openedCards[1].classList.toggle('unmatched');
+	disable();
 
 	setTimeout( function(){
-		
-		openedCards[0].classList.remove('show', 'open', 'unmatched', 'disable');
-		openedCards[1].classList.remove('show', 'open', 'unmatched', 'disable');
+		openedCards[0].classList.remove('show', 'open', 'unmatched');
+		openedCards[1].classList.remove('show', 'open', 'unmatched');
 		openedCards = [];
-		}, 500);
+		enable();
+	}, 500);
+}
+
+function disable() {
+	const cards = document.querySelectorAll('td');
+	for(let card of cards){
+		card.classList.add('disable');
+	}
+}
+
+function enable() {
+	const cards = document.querySelectorAll('td');
+	for(let card of cards){
+		if(card.classList.contains('matched') == false){
+			card.classList.remove('disable');
+		}
+	}
 }
 
 /*
@@ -155,7 +173,6 @@ function startTimer() {
 			hours++;
 			min = 0;
 		}
-		console.log(sec);
 	},1000);
 }
 
