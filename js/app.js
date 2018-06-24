@@ -138,14 +138,14 @@ function gameOver() {
 
 
 let sec = 0;
-let min = 59;
+let min = 0;
 let hours = 0;
 let timer = document.querySelector('.timer');
 let stopWatch;
 
 function startTimer() {
 	stopWatch = setInterval(function() {
-		timer.innerHTML = `${hours}:${min}:${sec}`;
+		timer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec)}`;
 		sec++;
 		if(sec === 60){
 			min++;
@@ -155,7 +155,16 @@ function startTimer() {
 			hours++;
 			min = 0;
 		}
-	},1000);	
+	},1000);
+}
+
+function numberFormat(num) {
+	num = num.toString();
+	if (num.length < 2){
+		num = '0'+num;
+	}
+
+	return num;
 }
 
 function stopTimer() {
@@ -170,11 +179,13 @@ function modalPopup(){
 	const close = document.querySelector('.close');
 	const finalMoves = document.querySelector('.display-moves');
 	const finalStars = document.querySelector('.display-stars');
+	const finalTimer = document.querySelector('.display-timer');
 	const stars = document.querySelectorAll('.fa-star');
 
 	modal.style.display = 'block';
 	finalMoves.innerHTML = moves;
 	finalStars.innerHTML = stars.length;
+	finalTimer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec-1)}`;
 	close.addEventListener('click', function() {
 		modal.style.display = 'none';
 		startGame();
@@ -220,9 +231,9 @@ function resetGame () {
 	//reset the timer
 	cardClicked = true;
 	sec = 0;
-	min = 59;
+	min = 0;
 	hours = 0;
-	timer.innerHTML = `${hours}:${min}:${sec}`;
+	timer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec)}`;
 }
 
 function startGame() {
