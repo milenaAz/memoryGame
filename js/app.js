@@ -131,13 +131,14 @@ function rating(index) {
 
 function gameOver() {
 	if(matchedPairs === 8) {
+		stopTimer();
 		modalPopup();
 	}
 }
 
 
 let sec = 0;
-let min = 0;
+let min = 59;
 let hours = 0;
 let timer = document.querySelector('.timer');
 let stopWatch;
@@ -155,6 +156,10 @@ function startTimer() {
 			min = 0;
 		}
 	},1000);	
+}
+
+function stopTimer() {
+	clearInterval(stopWatch);
 }
 
 /*
@@ -215,10 +220,9 @@ function resetGame () {
 	//reset the timer
 	cardClicked = true;
 	sec = 0;
-	min = 0;
+	min = 59;
 	hours = 0;
 	timer.innerHTML = `${hours}:${min}:${sec}`;
-	clearInterval(stopWatch);
 }
 
 function startGame() {
