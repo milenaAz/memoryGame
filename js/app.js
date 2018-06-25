@@ -1,57 +1,67 @@
 'use strict'
 
 const icons = ["fa-anchor", "fa-anchor", "fa-automobile", "fa-automobile", "fa-heart", "fa-heart",
-				 "fa-bicycle", "fa-bicycle", "fa-camera", "fa-camera", "fa-cloud",
-				  "fa-cloud", "fa-coffee", "fa-coffee", "fa-cube", "fa-cube"];
+				"fa-bicycle", "fa-bicycle", "fa-camera", "fa-camera", "fa-cloud",
+				"fa-cloud", "fa-coffee", "fa-coffee", "fa-cube", "fa-cube"];
 
 const stars = document.querySelectorAll('.fa-star');
 const deck = document.querySelector('tbody');
+const modal = document.querySelector('.modal');
 
 let openedCards = [];
 let matchedPairs = 0;
 let moves = 0;
 let cardClicked = true;
 
-/* Creates a 8x8 grid */
+/**
+* @description Creates a 8x8 deck
+*/
 function createDeck () {
 	const docFrag = document.createDocumentFragment();
 	const deck = document.querySelector('tbody');
 
-	for (let i = 0; i < 4; i++){
+	for (let i = 0; i < 4; i++) {
 		const row = document.createElement('tr');
 		docFrag.appendChild(row);		
-		for (let j = 0; j < 4; j++){
+		for (let j = 0; j < 4; j++) {
 			const col = document.createElement('td');
 			col.classList.add('card');
 			docFrag.appendChild(col);
 		}
 	}
-
 	deck.appendChild(docFrag);
 }
 
-/* Adds icon classes to <td> elements */
+/**
+* @description Adds icon classes to <td> elements
+*/
 function addIcons() {
 	const deck = document.querySelectorAll('td');
 
-	for (let i = 0; i < deck.length; i++){
+	for (let i = 0; i < deck.length; i++) {
 		deck[i].innerHTML = "<i class=\"fa "+icons[i]+"\"></i>";
 	}
 }
 
-/* Shuffles the array */
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
+/**
+* @description Shuffles the array
+* @param {array} array
+* @returns {array} the new shuffled array
+*/
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
+        [array[i], array[j]] = [array[j], array[i]];
     }
-    return a;
+    return array;
 }
 
-/* Show the card */
+/**
+* @description Show the card
+*/
 function openCard() {
-	//starts the timer on first click
-	if(cardClicked){
+	//starts the timer only on first click
+	if(cardClicked) {
 		startTimer();
 		cardClicked = false;
 	}
@@ -61,25 +71,26 @@ function openCard() {
     this.classList.toggle('disable');
 }
 
-/* Compares the cards if cards match then call match()
- else calls unmatched() function */
+/**
+* @description Compares the cards if the cards match then call match()
+* else call unmatched() function
+*/
 function compareCards() {
 	openedCards.push(this);
-   
     if(openedCards.length === 2) {
-        if(openedCards[0].innerHTML === openedCards[1].innerHTML){      
+        if(openedCards[0].innerHTML === openedCards[1].innerHTML) {      
            matched();
            moveCounter();
         } else {
            unmatched();
            moveCounter();
         }
-
-    }
+	}
 }
 
-/* this function runs when compared cards match.
-If cards match then cards should stay opened */
+/**
+* @description If cards match then cards should stay opened
+*/
 function matched() {
 	openedCards[0].classList.add('matched');
 	openedCards[1].classList.add('matched');
@@ -90,46 +101,55 @@ function matched() {
 	matchedPairs++;
 }
 
-/* this function runs when compared cards not match.
-If cards not match then cards should close */
+/**
+* @description If cards not match then cards should close
+*/
 function unmatched() {
 	openedCards[0].classList.toggle('unmatched');
 	openedCards[1].classList.toggle('unmatched');
-	disable();
-
-	setTimeout( function(){
+	
+	disable(); //disable all the other cards from clicking
+	setTimeout( function() {
 		openedCards[0].classList.remove('show', 'open', 'unmatched');
 		openedCards[1].classList.remove('show', 'open', 'unmatched');
 		openedCards = [];
-		enable();
+		enable(); //enable cards to click again
 	}, 500);
 }
 
+/**
+* @description disables all cards from click event
+*/
 function disable() {
 	const cards = document.querySelectorAll('td');
-	for(let card of cards){
+
+	for(let card of cards) {
 		card.classList.add('disable');
 	}
 }
 
+/**
+* @description enables unmatched cards to click event
+*/
 function enable() {
 	const cards = document.querySelectorAll('td');
-	for(let card of cards){
-		if(card.classList.contains('matched') == false){
+
+	for(let card of cards) {
+		if(card.classList.contains('matched') == false) {
 			card.classList.remove('disable');
 		}
 	}
 }
 
-/*
-*  Counts the moves
+/**
+* @description Counts the moves
 */
 function moveCounter() {
 	const movesEl = document.querySelector('.moves');
+	
 	moves++;
 	movesEl.innerHTML = moves + " ";
-
-	if(moves >= 13 && moves <= 15){
+	if(moves >= 13 && moves <= 15) {
 		rating(2);	
 	}
 	if(moves > 16) {
@@ -137,18 +157,22 @@ function moveCounter() {
 	}
 }
 
-/*
-*	
+/**
+* @description Handles the rating
+* @param {number} index - The index of nodeList stars
 */
 function rating(index) {
 	const stars = document.querySelectorAll('.fa-star');
 	const starToRemove = stars.item(index);
 	
-	if(starToRemove !== null){
+	if(starToRemove !== null) {
 		starToRemove.className ='fa fa-star-o'; 
 	}
 }
 
+/**
+* @description If matchedPairs is 8 then game is over
+*/
 function gameOver() {
 	if(matchedPairs === 8) {
 		stopTimer();
@@ -162,53 +186,59 @@ let min = 0;
 let hours = 0;
 let timer = document.querySelector('.timer');
 let stopWatch;
-
+/**
+* @description The timer starts
+*/
 function startTimer() {
 	stopWatch = setInterval(function() {
 		timer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec)}`;
 		sec++;
-		if(sec === 60){
+		if(sec === 60) {
 			min++;
 			sec = 0;
 		}
-		if(min === 60){
+		if(min === 60) {
 			hours++;
 			min = 0;
 		}
 	},1000);
 }
 
+/**
+* @description Formats the number to two digits
+* @param {number} num - The returned number from timer
+*/
 function numberFormat(num) {
 	num = num.toString();
-	if (num.length < 2){
+	if (num.length < 2) {
 		num = '0'+num;
 	}
 
 	return num;
 }
 
+/**
+* @description Stops the timer
+*/
 function stopTimer() {
 	clearInterval(stopWatch);
 }
 
-/*
-*  Opens the modal 
+/**
+* @description Opens the modal
 */
 function modalPopup(){
-	const modal = document.querySelector('.modal');
 	const close = document.querySelector('.modal-close');
 	
 	displayResults();
 	modal.style.visibility = 'visible';
-	
 	close.addEventListener('click', function() {
 		modal.style.visibility = 'hidden';
-		// startGame();
 	});
 }
 
-/*
-* Displays the results
+/**
+* @description Displays the results for modal
 */
 function displayResults() {
 	const finalMoves = document.querySelector('.display-moves');
@@ -221,26 +251,30 @@ function displayResults() {
 	finalTimer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec-1)}`;
 }
 
-// function restartGame() {
-	const restartBtn = document.querySelectorAll('.start-game');
-	for( const btn of restartBtn) {
-	btn.addEventListener('click', function() {
-		stopTimer();
-		startGame();
-	})
+/**
+* @description restarts the game
+*/
+function restartGame() {
+	startGame();
+	modal.style.visibility = 'hidden';
 }
-// }
 
+/**
+* @description If card clicked events happening
+*/
 function clickCard () {
 	const cards = document.querySelectorAll('.card');
 
-	for (let card of cards){
+	for (let card of cards) {
 	    card.addEventListener('click', openCard );
 	    card.addEventListener('click', compareCards );
 	    card.addEventListener('click', gameOver );
 	}
 }
 
+/**
+* @description Initialize the game
+*/
 function resetGame () {
 	//remove the deck
 	while (deck.firstChild) {
@@ -255,8 +289,7 @@ function resetGame () {
 	//reset matchedPairs to 0
 	matchedPairs = 0;
 	//get all the stars back
-	for (let i=0; i<3; i++)
-	{
+	for (let i=0; i<3; i++) {
 		stars[i].className = 'fa fa-star';
 	}
 	//reset the timer
@@ -267,10 +300,13 @@ function resetGame () {
 	timer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec)}`;
 }
 
+/**
+* @description Starts the game
+*/
 function startGame() {
 	resetGame();
 	createDeck();
-	// shuffle(icons);
+	shuffle(icons);
 	addIcons();
 	clickCard();
 }
