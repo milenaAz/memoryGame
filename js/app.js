@@ -196,14 +196,14 @@ function stopTimer() {
 */
 function modalPopup(){
 	const modal = document.querySelector('.modal');
-	const close = document.querySelector('.close');
+	const close = document.querySelector('.modal-close');
 	
 	displayResults();
 	modal.style.visibility = 'visible';
 	
 	close.addEventListener('click', function() {
-		modal.style.display = 'none';
-		startGame();
+		modal.style.visibility = 'hidden';
+		// startGame();
 	});
 }
 
