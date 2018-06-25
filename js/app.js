@@ -83,6 +83,8 @@ If cards match then cards should stay opened */
 function matched() {
 	openedCards[0].classList.add('matched');
 	openedCards[1].classList.add('matched');
+	openedCards[0].classList.remove('show');
+	openedCards[1].classList.remove('show');
 
 	openedCards = [];
 	matchedPairs++;
@@ -197,7 +199,7 @@ function modalPopup(){
 	const close = document.querySelector('.close');
 	
 	displayResults();
-	modal.style.display = 'block';
+	modal.style.visibility = 'visible';
 	
 	close.addEventListener('click', function() {
 		modal.style.display = 'none';
