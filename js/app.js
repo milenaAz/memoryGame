@@ -260,7 +260,7 @@ function displayResults() {
 	const stars = document.querySelectorAll('.fa-star');
 
 	finalMoves.innerHTML = moves;
-	finalStars.innerHTML = stars.length;
+	finalStars.innerHTML = `${stars.length} stars`;
 	finalTimer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec-1)}`;
 }
 
