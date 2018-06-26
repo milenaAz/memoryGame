@@ -25,7 +25,7 @@ function createDeck () {
 		docFrag.appendChild(row);		
 		for (let j = 0; j < 4; j++) {
 			const col = document.createElement('td');
-			col.classList.add('card');
+			col.classList.add('card', 'animated');
 			docFrag.appendChild(col);
 		}
 	}
@@ -69,6 +69,7 @@ function openCard() {
 	this.classList.toggle('show');
     this.classList.toggle('open');
     this.classList.toggle('disable');
+    this.classList.toggle('flipInY');
 }
 
 /**
@@ -92,10 +93,10 @@ function compareCards() {
 * @description If cards match then cards should stay opened
 */
 function matched() {
-	openedCards[0].classList.add('matched');
-	openedCards[1].classList.add('matched');
-	openedCards[0].classList.remove('show');
-	openedCards[1].classList.remove('show');
+	openedCards[0].classList.add('matched', 'tada');
+	openedCards[1].classList.add('matched', 'tada');
+	openedCards[0].classList.remove('show', 'flipInY');
+	openedCards[1].classList.remove('show', 'flipInY');
 
 	openedCards = [];
 	matchedPairs++;
@@ -105,16 +106,20 @@ function matched() {
 * @description If cards not match then cards should close
 */
 function unmatched() {
-	openedCards[0].classList.toggle('unmatched');
-	openedCards[1].classList.toggle('unmatched');
+	openedCards[0].classList.remove('flipInY');
+	openedCards[1].classList.remove('flipInY');
+	openedCards[0].classList.add('swing', 'unmatched');
+	openedCards[1].classList.add('swing', 'unmatched');
+	// openedCards[0].classList.toggle('unmatched');
+	// openedCards[1].classList.toggle('unmatched');
 	
 	disable(); //disable all the other cards from clicking
 	setTimeout( function() {
-		openedCards[0].classList.remove('show', 'open', 'unmatched');
-		openedCards[1].classList.remove('show', 'open', 'unmatched');
+		openedCards[0].classList.remove('show', 'open', 'unmatched', 'swing');
+		openedCards[1].classList.remove('show', 'open', 'unmatched', 'swing');
 		openedCards = [];
 		enable(); //enable cards to click again
-	}, 500);
+	}, 1000);
 }
 
 /**
@@ -149,10 +154,10 @@ function moveCounter() {
 	
 	moves++;
 	movesEl.innerHTML = moves + " ";
-	if(moves >= 13 && moves <= 15) {
+	if(moves >= 16 && moves <= 18) {
 		rating(2);	
 	}
-	if(moves > 16) {
+	if(moves > 19) {
 		rating(1);
 	}
 }
@@ -176,7 +181,15 @@ function rating(index) {
 function gameOver() {
 	if(matchedPairs === 8) {
 		stopTimer();
-		modalPopup();
+
+		//wait 2 sec before zoom in the deck
+		setTimeout(function () {
+			deck.classList.add('zoomIn');
+		}, 1000);
+	
+		setTimeout(function() {
+			modalPopup();
+		}, 3000);
 	}
 }
 
@@ -280,6 +293,7 @@ function resetGame () {
 	while (deck.firstChild) {
     	deck.removeChild(deck.firstChild);
 	}
+	deck.classList.remove('zoomIn');
 	//reset moves to 0
 	moves = 0; 
 	const movesEl = document.querySelector('.moves');
@@ -297,6 +311,7 @@ function resetGame () {
 	sec = 0;
 	min = 0;
 	hours = 0;
+	stopTimer();
 	timer.innerHTML = `${numberFormat(hours)}:${numberFormat(min)}:${numberFormat(sec)}`;
 }
 

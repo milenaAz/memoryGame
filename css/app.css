@@ -54,6 +54,10 @@ body {
 	background: #ff0000ab;
 }
 
+.swing {
+    background: #ff0000ab;
+}
+
 .container {
 	display: flex;
 	align-items: center;
