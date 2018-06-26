@@ -4,7 +4,7 @@ This game was created as part of Udacity's FEND class on JavaScript.
 It's a game that test your memory. It contains a table with 8 different pairs.
 
 ## Installation
-You don't have to install this game because it is hosted here:
+You don't have to install this game because it is hosted here: https://milenaaz.github.io/udacity-project-memory-game/index.html
 
 
 ## How to play
