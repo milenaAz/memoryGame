@@ -1,8 +1,8 @@
 'use strict'
 
-const icons = ["fa-anchor", "fa-anchor", "fa-automobile", "fa-automobile", "fa-heart", "fa-heart",
-				"fa-bicycle", "fa-bicycle", "fa-camera", "fa-camera", "fa-cloud",
-				"fa-cloud", "fa-coffee", "fa-coffee", "fa-cube", "fa-cube"];
+const icons = ["fa-space-shuttle", "fa-space-shuttle", "fa-user-astronaut", "fa-user-astronaut", "fa-satellite", "fa-satellite",
+		"fa-robot", "fa-robot", "fa-rocket", "fa-rocket", "fa-satellite-dish",
+		"fa-satellite-dish", "fa-fighter-jet", "fa-fighter-jet", "fa-sun", "fa-sun"];
 
 const stars = document.querySelectorAll('.fa-star');
 const deck = document.querySelector('tbody');
@@ -39,7 +39,7 @@ function addIcons() {
 	const deck = document.querySelectorAll('td');
 
 	for (let i = 0; i < deck.length; i++) {
-		deck[i].innerHTML = "<i class=\"fa "+icons[i]+"\"></i>";
+		deck[i].innerHTML = "<i class=\"fas "+icons[i]+"\"></i>";
 	}
 }
 
